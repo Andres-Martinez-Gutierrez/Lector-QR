@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lector_qr/pages/home_page.dart';
+import 'package:lector_qr/pages/mapa_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -8,15 +10,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Material App Bar'),
-        ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
-      ),
+      debugShowCheckedModeBanner: false,
+      title: 'Lector QR',
+      initialRoute: 'home',
+      routes: {
+        'home': (_) => HomePage(),
+        'mapa': (_) => MapaPage(),
+      },
     );
   }
 }
