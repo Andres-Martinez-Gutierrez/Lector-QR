@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:lector_qr/pages/home_page.dart';
 import 'package:lector_qr/pages/mapa_page.dart';
+import 'package:lector_qr/providers/ui_provider.dart';
 
 void main() => runApp(const MyApp());
 
@@ -9,18 +12,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Lector QR',
-      initialRoute: 'home',
-      routes: {
-        'home': (_) => HomePage(),
-        'mapa': (_) => MapaPage(),
-      },
-      theme: ThemeData(
-        primarySwatch: _createMaterialColor(Colors.deepPurple.shade200),
-        floatingActionButtonTheme: FloatingActionButtonThemeData(
-            backgroundColor: Colors.deepPurple.shade200),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => UIProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Lector QR',
+        initialRoute: 'home',
+        routes: {
+          'home': (_) => HomePage(),
+          'mapa': (_) => MapaPage(),
+        },
+        theme: ThemeData(
+          primarySwatch: _createMaterialColor(Colors.deepPurple.shade200),
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+              backgroundColor: Colors.deepPurple.shade200),
+        ),
       ),
     );
   }
