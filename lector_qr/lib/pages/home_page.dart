@@ -8,6 +8,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0.0,
         title: const Text('Historial'),
         actions: [
