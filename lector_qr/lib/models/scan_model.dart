@@ -4,18 +4,18 @@
 
 import 'dart:convert';
 
-SearchResponse searchResponseFromJson(String str) =>
-    SearchResponse.fromJson(json.decode(str));
-String searchResponseToJson(SearchResponse data) => json.encode(data.toJson());
+ScanModel searchResponseFromJson(String str) =>
+    ScanModel.fromJson(json.decode(str));
+String searchResponseToJson(ScanModel data) => json.encode(data.toJson());
 
-class SearchResponse {
+class ScanModel {
   //Constructor de la clase
-  SearchResponse({
+  ScanModel({
     this.id,
     this.tipo,
     required this.valor,
   }) {
-    if (tipo!.contains('http')) {
+    if (valor.contains('http')) {
       tipo = 'http';
     } else {
       tipo = 'geo';
@@ -26,7 +26,7 @@ class SearchResponse {
   String? tipo;
   String valor;
 
-  factory SearchResponse.fromJson(Map<String, dynamic> json) => SearchResponse(
+  factory ScanModel.fromJson(Map<String, dynamic> json) => ScanModel(
         id: json["id"],
         tipo: json["tipo"],
         valor: json["valor"],

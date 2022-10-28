@@ -4,7 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:lector_qr/widgets/custom_navigatorbar.dart';
 import 'package:lector_qr/pages/direcciones_page.dart';
 import 'package:lector_qr/pages/mapas_page.dart';
+
 import 'package:lector_qr/providers/ui_provider.dart';
+import 'package:lector_qr/providers/db_provider.dart';
+
 import 'package:lector_qr/widgets/scan_button.dart';
 
 class HomePage extends StatelessWidget {
@@ -38,6 +41,10 @@ class _HomePageBody extends StatelessWidget {
 
     //Cambiar para mostrar la pagina respectiva
     final currentIndex = uiProvider.selectedMenuOpt;
+
+    //Todo: temporal
+    final temporalScan = ScanModel(valor: 'http://google.com');
+    DBProvider.db.nuevoScan(temporalScan);
 
     switch (currentIndex) {
       case 0:
