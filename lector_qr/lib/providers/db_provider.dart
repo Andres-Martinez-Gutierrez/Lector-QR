@@ -10,7 +10,6 @@ export 'package:lector_qr/models/scan_model.dart';
 class DBProvider {
   //Propiedad estatica
   static Database? _database;
-
   //Instancia de la clase para crear el singelton con constructor privado
   static final DBProvider db = DBProvider._();
 
@@ -20,12 +19,12 @@ class DBProvider {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await InitDB();
+    _database = await initDB();
 
     return _database!;
   }
 
-  Future<Database> InitDB() async {
+  Future<Database> initDB() async {
     //Path de donde se almacenara la Base de datos
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentsDirectory.path, 'ScansDB.db');
@@ -34,7 +33,7 @@ class DBProvider {
     //Crear base de datos
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onOpen: (db) {},
       onCreate: (db, version) async {
         await db.execute('''
@@ -71,8 +70,31 @@ class DBProvider {
     final db = await database;
 
     final res = await db.insert('Scans', nuevoScan.toJson());
-
+    print(res);
     //ID del último registro insertado
     return res;
+  }
+
+  Future<ScanModel?> getScanById(int id) async {
+    final db = await database;
+    final res = await db.query('Scans', where: 'id = ?', whereArgs: [id]);
+
+    return res.isNotEmpty ? ScanModel.fromJson(res.first) : null;
+  }
+
+  Future<List<ScanModel>?> getTodosScans() async {
+    final db = await database;
+    final res = await db!.query('Scans');
+
+    return res.isNotEmpty ? res.map((e) => ScanModel.fromJson(e)).toList() : [];
+  }
+
+  Future<List<ScanModel>?> getScansPorTipo(String tipo) async {
+    final db = await database;
+    final res = await db!.rawQuery('''
+      SELECT * FROM Scans WHERE tipo = '$tipo'
+    ''');
+
+    return res.isNotEmpty ? res.map((e) => ScanModel.fromJson(e)).toList() : [];
   }
 }
