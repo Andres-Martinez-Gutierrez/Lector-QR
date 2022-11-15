@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lector_qr/providers/scan_list_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'package:lector_qr/widgets/custom_navigatorbar.dart';
@@ -47,11 +48,16 @@ class _HomePageBody extends StatelessWidget {
     //DBProvider.db.nuevoScan(temporalScan);
     //DBProvider.db.getScanById(21).then((scan) => print(scan!.valor));
     //DBProvider.db.getTodosScans().then( print);
+    //DBProvider.db.deleteAllScans().then(print);
+    final scanListProvider =
+        Provider.of<ScanListProvider>(context, listen: false);
 
     switch (currentIndex) {
       case 0:
+        scanListProvider.cargarScanPorTipo('geo');
         return const MapasPage();
       case 1:
+        scanListProvider.cargarScanPorTipo('http');
         return const DireccionesPage();
       default:
         return const MapasPage();
