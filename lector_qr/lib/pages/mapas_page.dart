@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:lector_qr/providers/scan_list_provider.dart';
 import 'package:provider/provider.dart';
@@ -11,20 +10,31 @@ class MapasPage extends StatelessWidget {
     final scanListProvider = Provider.of<ScanListProvider>(context);
     return ListView.builder(
       itemCount: scanListProvider.scans.length,
-      itemBuilder: (_, index) => ListTile(
-        leading: Icon(
-          Icons.map,
-          color: Theme.of(context).primaryColor,
+      itemBuilder: (_, index) => Dismissible(
+        background: Container(
+          color: Colors.red,
         ),
-        title: Text(
-          scanListProvider.scans[index].valor,
+        onDismissed: (DismissDirection direction) {
+          Provider.of<ScanListProvider>(context, listen: false)
+              .borrarScanPorId(scanListProvider.scans[index].id!);
+        },
+        key: Key(scanListProvider.scans[index].id.toString()),
+        //key: UniqueKey(),
+        child: ListTile(
+          leading: Icon(
+            Icons.map,
+            color: Theme.of(context).primaryColor,
+          ),
+          title: Text(
+            scanListProvider.scans[index].valor,
+          ),
+          subtitle: Text('${scanListProvider.scans[index].id}'),
+          trailing: const Icon(
+            Icons.keyboard_arrow_right,
+            color: Colors.grey,
+          ),
+          onTap: (() => print(scanListProvider.scans[index].id.toString())),
         ),
-        subtitle: Text('${scanListProvider.scans[index].id}'),
-        trailing: const Icon(
-          Icons.keyboard_arrow_right,
-          color: Colors.grey,
-        ),
-        onTap: (() => print(scanListProvider.scans[index].id.toString())),
       ),
     );
   }
