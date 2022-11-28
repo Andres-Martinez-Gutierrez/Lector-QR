@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lector_qr/utils/utilis.dart';
 
 import 'package:provider/provider.dart';
 
@@ -43,7 +44,7 @@ class ScanList extends StatelessWidget {
             Icons.keyboard_arrow_right,
             color: Colors.grey,
           ),
-          onTap: (() => print(scans[index].id.toString())),
+          onTap: (() => urlLauncher(context, scans[index])),
         ),
       ),
     );
