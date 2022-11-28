@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
-//import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-//import 'package:lector_qr/models/scan_model.dart';
+
 import 'package:lector_qr/providers/db_provider.dart';
 
 class ScanListProvider extends ChangeNotifier {
@@ -17,6 +16,7 @@ class ScanListProvider extends ChangeNotifier {
       scans.add(nuevoScan);
       notifyListeners();
     }
+    return nuevoScan;
   }
 
   cargarScans() async {
@@ -39,7 +39,8 @@ class ScanListProvider extends ChangeNotifier {
   }
 
   borrarScanPorId(int id) async {
+    scans.removeWhere((scan) => scan.id == id);
     await DBProvider.db.deleteScan(id);
-    cargarScanPorTipo(tipoSeleccionado);
+    notifyListeners();
   }
 }

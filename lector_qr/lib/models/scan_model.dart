@@ -4,9 +4,8 @@
 
 import 'dart:convert';
 
-ScanModel searchResponseFromJson(String str) =>
-    ScanModel.fromJson(json.decode(str));
-String searchResponseToJson(ScanModel data) => json.encode(data.toJson());
+ScanModel scanModelFromJson(String str) => ScanModel.fromJson(json.decode(str));
+String scanModelToJson(ScanModel data) => json.encode(data.toJson());
 
 class ScanModel {
   //Constructor de la clase
