@@ -23,8 +23,11 @@ class _MapaPageState extends State<MapaPage> {
     final ScanModel scan =
         ModalRoute.of(context)!.settings.arguments as ScanModel;
 
-    final CameraPosition puntoInicial =
-        CameraPosition(target: scan.getLatLng(), zoom: 17.5, tilt: 50);
+    final CameraPosition puntoInicial = CameraPosition(
+      target: scan.getLatLng(),
+      zoom: 17.5,
+      tilt: 50,
+    );
 
     // ignore: prefer_collection_literals
     final Set<Marker> markers = Set<Marker>();
@@ -35,6 +38,23 @@ class _MapaPageState extends State<MapaPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Coordenadas'),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              final GoogleMapController controller = await _controller.future;
+              controller.animateCamera(
+                CameraUpdate.newCameraPosition(
+                  CameraPosition(
+                    target: scan.getLatLng(),
+                    zoom: 17.5,
+                    tilt: 50,
+                  ),
+                ),
+              );
+            },
+            icon: const Icon(Icons.location_on),
+          ),
+        ],
       ),
       body: GoogleMap(
         markers: markers,
