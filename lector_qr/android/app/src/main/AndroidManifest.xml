@@ -4,6 +4,9 @@
         android:label="lector_qr"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyB-N0uSLgZ17jnSoEi5UoQj56ERD7JOhdU"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
